@@ -19,7 +19,7 @@
 			<artifactId>tomcat-mongo-session</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-core</artifactId>
@@ -52,6 +52,18 @@
 		</dependency>
 	</dependencies>
 
+
+	<repositories>
+		<repository>
+			<id>ntier-local-repo</id>
+			<name>ntier-local-repo</name>
+			<layout>default</layout>
+			<url>file://${project.basedir}/../src/repo</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<build>
 		<finalName>EmbeddedTomcat</finalName>
