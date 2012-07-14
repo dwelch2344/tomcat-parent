@@ -8,9 +8,19 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title> tomcat-web </title>
 
+		<%-- Set the base URL based on context --%>
 		<c:url value="/" var="baseUrl" />
-		<c:set value="${fn:length(baseUrl)}" var="baseUrlLen" />
-		<c:set var="baseUrl" value="${fn:substring(baseUrl, 0, baseUrlLen - 1)}"/>
+		<c:choose>
+			<c:when test="${fn:length(baseUrl) <= 2}">
+				<%-- If we're deployed as ROOT, it should be empty --%>
+				<c:set var="baseUrl" value=""/>
+			</c:when>
+			<c:otherwise>
+				<%-- If we're not deployed as ROOT, trim the trailing slash --%>
+				<c:set value="${fn:length(baseUrl)}" var="baseUrlLen" />
+				<c:set var="baseUrl" value="${fn:substring(baseUrl, 0, baseUrlLen - 1)}"/>
+			</c:otherwise>
+		</c:choose>
 		
     	<link rel="stylesheet" type="text/css" media="all" href="${baseUrl}/resources/bootstrap/css/bootstrap.css"/>
     	<link rel="stylesheet" type="text/css" media="all" href="${baseUrl}/resources/bootstrap/css/bootstrap-responsive.css"/>
