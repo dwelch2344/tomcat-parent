@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		">
+
+	<security:http entry-point-ref="authenticationProcessingFilterEntryPoint" use-expressions="true" auto-config="true" >
+		<security:form-login login-page="/login" login-processing-url="/doLogin"
+			authentication-failure-url="/login" 
+			username-parameter="user" password-parameter="password" />
+		<security:anonymous enabled="false"/>
+		<security:intercept-url pattern="/secure/**" access="hasRole('ROLE_DEFAULT')"/>
+		<!-- Uncomment this section to enable security -->
+		<!-- <security:intercept-url pattern="/**" access="isAuthenticated()" /> -->
+	</security:http>
+
+	<bean id="authenticationProcessingFilterEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<property name="loginFormUrl" value="/login" />
+	</bean>
+
+</beans>
