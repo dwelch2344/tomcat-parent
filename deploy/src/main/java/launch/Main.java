@@ -2,7 +2,13 @@ package launch;
 
 import java.io.File;
 
+import org.apache.catalina.Context;
+import org.apache.catalina.Manager;
+import org.apache.catalina.session.StandardManager;
 import org.apache.catalina.startup.Tomcat;
+
+import com.dawsonsystems.session.MongoManager;
+import com.mongodb.ServerAddress;
 
 public class Main {
 
@@ -19,15 +25,32 @@ public class Main {
         // TODO make this project specific
         File webappFile = new File("web/target/tomcat-web");
         String message = String.format( "Deploying on port %s the following directory: %s", webPort, webappFile.getAbsolutePath() );
-        System.out.println( message);
-        
-        tomcat.addWebapp("/", webappFile.getAbsolutePath());
-        
+        System.out.println( message );
         
         // TODO wire up a Mongo session?
+        Context context = tomcat.addWebapp("/", webappFile.getAbsolutePath());
+        Manager manager = getManager();
+        if(manager != null){
+        	context.setManager(new StandardManager());
+        	System.out.println(  );
+        }
+        
         
         
         tomcat.start();
         tomcat.getServer().await();  
+    }
+    
+    private static Manager getManager(){
+    	try{
+	    	String url = "mongodb://test:password@ds033267.mongolab.com:33267/session-test";
+	    	ServerAddress address = new ServerAddress("ds033267.mongolab.com", 33267);
+	    	MongoManager manager = new MongoManager(address, "session-test");
+	    	System.out.println( "Established MongoManager to " + address);
+	    	return manager;
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	return null;
     }
 }
