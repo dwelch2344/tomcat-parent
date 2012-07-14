@@ -51,6 +51,7 @@ public class Main {
 	    	// String url = "mongodb://test:password@ds033267.mongolab.com:33267/session-test";
 	    	ServerAddress address = new ServerAddress("ds033267.mongolab.com", 33267);
 	    	MongoManager manager = new MongoManager(address, "session-test", "test", "password");
+	    	manager.setMaxInactiveInterval(10000);
 	    	System.out.println( "Established MongoManager to " + address);
 	    	return manager;
     	}catch(Exception e){
