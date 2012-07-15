@@ -48,10 +48,10 @@ public class Main {
     
     private static Manager getManager(){
     	try{
-	    	// String url = "mongodb://test:password@ds033267.mongolab.com:33267/session-test";
-	    	ServerAddress address = new ServerAddress("ds033267.mongolab.com", 33267);
-	    	MongoManager manager = new MongoManager(address, "session-test", "test", "password");
-	    	manager.setMaxInactiveInterval(10000);
+	    	// String url = "mongodb://<user>:<password>@<host>:<port>/<database>";
+	    	ServerAddress address = new ServerAddress("host", 33267);
+	    	MongoManager manager = new MongoManager(address, "session-test", "user", "password");
+	    	// manager.setMaxInactiveInterval(10000);
 	    	System.out.println( "Established MongoManager to " + address);
 	    	return manager;
     	}catch(Exception e){

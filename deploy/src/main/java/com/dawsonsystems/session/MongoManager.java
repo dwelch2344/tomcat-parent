@@ -1,10 +1,5 @@
 package com.dawsonsystems.session;
 
-import com.mongodb.*;
-
-import org.apache.catalina.*;
-import org.apache.catalina.session.StandardSession;
-
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +8,26 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.catalina.Container;
+import org.apache.catalina.Lifecycle;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.LifecycleListener;
+import org.apache.catalina.LifecycleState;
+import org.apache.catalina.Loader;
+import org.apache.catalina.Manager;
+import org.apache.catalina.Session;
+import org.apache.catalina.Valve;
+import org.apache.catalina.session.StandardSession;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.Mongo;
+import com.mongodb.ServerAddress;
+import com.mongodb.WriteResult;
 
 public class MongoManager implements Manager, Lifecycle {
 	
@@ -36,7 +51,7 @@ public class MongoManager implements Manager, Lifecycle {
 	private String serializationStrategyClass = "com.dawsonsystems.session.JavaSerializer";
 
 	private Container container;
-	private int maxInactiveInterval;
+	private int maxInactiveInterval = 60 * 30; // 30 minutes
 
 	private LifecycleState state = LifecycleState.NEW;
 
@@ -427,7 +442,9 @@ public class MongoManager implements Manager, Lifecycle {
 		try {
 			mongo = new Mongo(serverAddress);
 			db = mongo.getDB(databaseName);
-			db.authenticate(username, password);
+			if( username != null && password != null){
+				db.authenticate(username, password);
+			}
 			if (slaveOk) {
 				db.slaveOk();
 			}
