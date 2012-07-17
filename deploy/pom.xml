@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>deploy</artifactId>
+	<artifactId>tomcat-deploy</artifactId>
 	<parent>
 		<groupId>co.ntier.tomcat</groupId>
-		<artifactId>tomcat-parent</artifactId>
+		<artifactId>tomcat</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../</relativePath>
 	</parent>
@@ -16,11 +16,11 @@
 	</properties>
 
 	<dependencies>
-		<!-- <dependency>
+		<dependency>
 			<groupId>co.ntier.mongo</groupId>
-			<artifactId>tomcat-mongo-session</artifactId>
+			<artifactId>tomcat-session-manager</artifactId>
 			<version>1.0.0</version>
-		</dependency> -->
+		</dependency>
 		 <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>

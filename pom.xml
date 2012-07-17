@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>co.ntier.tomcat</groupId>
-	<artifactId>tomcat-parent</artifactId>
+	<artifactId>tomcat</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>Tomcat Parent Project</name>
@@ -11,5 +11,14 @@
 		<module>web</module>
 		<module>deploy</module>
 	</modules>
+	
+	<repositories>
+		<repository>
+			<id>sonatype-oss</id>
+			<name>Sonatype OSS Repository Hosting</name>
+			<layout>default</layout>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+		</repository>
+	</repositories> 
 	
 </project>
